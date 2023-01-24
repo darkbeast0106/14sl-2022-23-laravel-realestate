@@ -13,7 +13,7 @@ class StoreRealestateRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,12 @@ class StoreRealestateRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            "user_id" => "required|integer|exists:users,id",
+            "address" => "required|string|max:255",
+            "area" => "required|integer|min:1|max:10000",
+            "room_count" => "required|integer|min:1|max:100",
+            "rent" => "required_without:cost|nullable|integer|min:1|max:10000000",
+            "cost" => "required_without:rent|nullable|integer|min:1|max:100000000000"
         ];
     }
 }

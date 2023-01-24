@@ -13,7 +13,7 @@ class UpdateRealestateRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,12 @@ class UpdateRealestateRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            "user_id" => "integer|exists:users,id",
+            "address" => "string|max:255",
+            "area" => "integer|min:1|max:10000",
+            "room_count" => "integer|min:1|max:100",
+            "rent" => "required_if:cost,null|nullable|integer|min:1|max:10000000",
+            "cost" => "required_if:rent,null|nullable|integer|min:1|max:100000000000"
         ];
     }
 }
